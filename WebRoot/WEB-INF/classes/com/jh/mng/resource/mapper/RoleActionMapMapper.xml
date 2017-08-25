@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.mng.mapper.RoleActionMapMapper">
+
+	<resultMap type="RoleActionMap" id="roleActionMapResultMap">
+		<id property="id" column="roleactionmapId"/>
+		<result property="status" column="status"/>
+		<result property="creater" column="creater" />
+		<result property="createTime" column="createTime" />
+		<result property="updater" column="updater" />
+		<result property="updateTime" column="updateTime" />
+		
+		<association property="uriAction" column="actionId" javaType="UriAction" resultMap="actionResult">
+		</association>
+		
+		<association property="role" column="roleId" javaType="Role" resultMap="roleResult">
+		</association>
+		
+		<association property="component" column="componentId" javaType="Component" resultMap="componentResult">
+		</association>
+		
+	</resultMap>
+	
+	<resultMap id="actionResult" type="UriAction">
+		<id property="id" column="uriactionId"/>
+		<result property="name" column="uriactionname" />
+		<result property="opKey" column="opKey" />
+		<result property="actionValue" column="actionValue" />
+		<result property="actionType" column="actionType" />
+		
+		<association property="uri" column="uriId" javaType="Uri" resultMap="uriResult">
+		</association>
+	</resultMap>
+	
+	<resultMap id="uriResult" type="Uri">
+		<id property="id" column="uriId"/>
+		<result property="uri" column="uri" />
+	</resultMap>
+	
+	
+	<resultMap id="componentResult" type="Component">
+		<id property="id" column="componentId"/>
+		<result property="name" column="name" />
+	</resultMap>
+	
+	<resultMap id="roleResult" type="Role">
+		<id property="id" column="roleId"/>
+	</resultMap>
+	
+	
+	<select id="queryMapByConditions"  resultMap="roleActionMapResultMap">
+			SELECT a.id as roleactionmapId,a.status,a.creater,a.createTime,a.updater,a.updateTime,
+				   d.id as uriactionId,d.opKey,d.actionValue,d.actionType,d.name as uriactionname,e.id as uriId,e.uri,b.id as roleId,c.id as componentId,c.name
+			from jh_roleactionmap a, jh_role b, jh_component c,jh_uriaction d,jh_uri e
+			where a.roleId = b.id and a.componentId = c.id and a.actionId = d.id and d.uriId = e.id AND d.componentId = c.id and  a.uriId = e.id
+			and a.roleId = #{role.id}
+				<if test="component != null and component.status != null">
+					and c.status = #{component.status}
+				</if>
+				<if test="component != null and component.kindType != null">
+					and c.kindType = #{component.kindType}
+				</if>
+				<if test="uriAction != null and uriAction.actionType != null">
+					and d.actionType = #{uriAction.actionType}
+				</if>
+				<if test="uriAction != null and uriAction.status != null">
+					and d.status = #{uriAction.status}
+				</if>
+	</select>
+	
+	<insert id="createRoleActionMap">
+		<selectKey resultType="long" order="BEFORE" keyProperty="id">  
+			select jh_Roleactionmap_seq.nextval from dual
+	    </selectKey>  
+	   	insert into jh_Roleactionmap (id,roleId,componentId,uriId,actionId,
+	   	status,creater,createTime,updater,updateTime)
+	   	values
+	   	(#{id},#{role.id},#{component.id},#{uriId},#{uriAction.id},#{status},
+	   	#{creater}, sysdate, #{creater}, sysdate)
+	</insert>
+	
+	<delete id="deleteRoleActionMap" parameterType="Long">
+		delete from jh_Roleactionmap where roleId = #{roleId}
+	</delete>
+</mapper>
+

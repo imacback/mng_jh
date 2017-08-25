@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.mng.mapper.AdminRoleMapMapper">
+
+	<resultMap type="AdminRoleMap" id="adminRoleMapResultMap">
+		<id property="id" column="id"/>
+		<result property="status" column="status"/>
+		<result property="creater" column="creater" />
+		<result property="createTime" column="createTime" />
+		<result property="updater" column="updater" />
+		<result property="updateTime" column="updateTime" />
+		
+		<association property="admin" column="adminId" javaType="Admin" resultMap="adminResult">
+		</association>
+		
+		<association property="role" column="roleId" javaType="Role" resultMap="roleResult">
+		</association>
+		
+	</resultMap>
+	
+	<resultMap id="adminResult" type="Admin">
+		<id property="id" column="adminId"/>
+		<result property="isRoot" column="isRoot" />
+	</resultMap>
+	
+	<resultMap id="roleResult" type="Role">
+		<id property="id" column="roleId"/>
+	</resultMap>
+	
+	
+	<!-- 查询用户，根据id -->
+	<select id="queryAdminRoleMapByAdminId" parameterType="Long" resultMap="adminRoleMapResultMap">
+		<![CDATA[
+			SELECT a.id,a.status,a.creater,a.createTime,a.updater,a.updateTime,
+			b.id as adminId, b.isRoot, c.id as roleId from jh_adminrolemap a, jh_admin b, jh_role c where a.adminId = b.id and a.roleId = c.id and b.id = #{id}
+		]]> 
+	</select>
+	
+	<!-- 查询用户，根据id -->
+	<select id="queryAdminRoleMapByRoleId" parameterType="Long" resultMap="adminRoleMapResultMap">
+		<![CDATA[
+			SELECT a.id,a.status,a.creater,a.createTime,a.updater,a.updateTime,
+			b.id as adminId, b.isRoot, c.id as roleId from jh_adminrolemap a, jh_admin b, jh_role c where a.adminId = b.id and a.roleId = c.id and c.id = #{id}
+		]]> 
+	</select>
+	
+	<insert id="createAdminRoleMap">
+		<selectKey resultType="long" order="BEFORE" keyProperty="id">  
+			select jh_adminRoleMap_seq.nextval from dual
+	   　</selectKey>  
+		insert into jh_adminRoleMap(id, adminId, roleId, status, 
+		creater, createTime, updater, updateTime) 
+		values
+		(#{id}, #{admin.id}, #{role.id}, #{status},
+		#{creater}, sysdate, #{creater}, sysdate)
+	</insert>
+	
+	<update id="updateAdminRoleMapByAdminId">
+		update jh_adminRoleMap 
+		<set>
+			<!-- <if test="role.id!=null">
+				roleId = #{role.id},
+			</if> -->
+			roleId = #{role.id},updater = #{updater}, updateTime = sysdate where adminId = #{admin.id}
+		</set>
+	</update>
+	
+	<delete id="deleteAdminRoleMapByAdminId" parameterType="Long">
+		delete from jh_adminRoleMap where adminId=#{admin.id}
+	</delete>
+	
+<!--  	
+	<select id="getAdminByContidions" resultMap="adminResultMap">
+			select * from jh_admin 
+			<where>
+				<if test="name != null">
+					username = #{name}
+				</if>
+				<if test="password != null">
+					and psd = #{password}
+				</if>
+				<if test="type != null">
+					and usertype = #{type}
+				</if>
+				<if test="status != null">
+					and status = #{status}
+				</if>
+				<if test="isRoot != null">
+					and isRoot = #{isRoot}
+				</if>
+			</where>
+	</select>
+	-->
+</mapper>

@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<script type="text/javascript" language="javascript" src="#getJs()/jquery-1.8.0.js" charset="UTF-8"></script>
+		<script type="text/javascript" language="javascript" src="#getJs()/admin/addRole.js" charset="UTF-8"></script>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<tilte></title>
+		<link href="#getCssFolder()/css.css" rel="stylesheet" type="text/css" >
+		
+        <style type="text/css">
+			.head{font-family:宋体;font-size:15px;font-weight:bold;font-style:normal;text-decoration:none;color:blue;}
+			.td_name{color:red;}
+		</style>
+	</head>
+	
+<body>
+		<table class="table" width="99%" align="center" border="0">
+			<tbody>
+				<tr>
+					<th class="bg_tr" style="font-size:15px;text-align:left;">用户角色管理 > 新增角色</th>
+				</tr>
+			</tbody>
+		</table>
+		
+		<form action="addRole.do" method="post" id="addRole" name="addRole">
+			<table class="table" width="99%" align="center" border="0">
+				<tr>
+					<td class="bg_tr" colspan="2">
+						<span class="head">
+							新增角色
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="td_bg" align="right">
+						<span class="td_name">*</span>角色名：
+					</td>
+					<td class="td_bg">
+						<input id="name" maxlength="14" name="name" width="200" height="25" type="text" value=""/>
+					</td>
+				</tr>
+				<tr>
+					<td class="td_bg" align="right">
+						<span class="td_name">*</span>角色描述：
+					</td>
+					<td class="td_bg">
+						<input id="description" maxlength="14" name="description" width="200" height="25" type="text" value=""/>
+					</td>
+				</tr>
+				<tr>
+					<td class="td_bg" align="right">
+						角色状态：
+					</td>
+					<td class="td_bg">
+						<select name="status" style="width:154px">
+							<option value="1" selected="selected">可用</option>
+							<option value="0">禁用</option>
+						</select>
+					</td>   
+				</tr>
+			</table>
+            <table class="table" width="99%" align="center" border="0">
+				#foreach($component in $!componentList)
+				<tr>
+                    <td style="background:#E4F1FA">
+						<input type="checkbox" class="comphead" id="c_$!{component.id}" name="c_$!{component.id}"/>
+                        <label for="c_$!{component.id}">$!{component.name}</label>
+					</td>
+				</tr>
+				<tr>
+					<td style="background:#fff;" class="&!{component.id}">
+						#foreach($uriAction in $!uriActionList)
+							#if($!{uriAction.component.id} == $!{component.id})
+								<span>
+									<input type="checkbox" class="c_$!{component.id}" id="u_$!{uriAction.id}" value="$!{uriAction.id}_$!{uriAction.uri.id}_$!{uriAction.component.id}" name="uriActionCheck" />
+                                    <label for="u_$!{uriAction.id}">$!{uriAction.name}</label>
+								</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							#end
+						#end
+					</td>
+				</tr>
+				#end
+			</table>
+			
+		</form>	
+		<p style="text-align:center;">
+			<input type="button" id="subbutton" name="subbutton" value="提交" onclick="javascript:add();"/>
+			<input type="button" id="back" name="back" value="返回" onclick="history.go(-1);"/>
+		</p>
+	</body>	
+</html>

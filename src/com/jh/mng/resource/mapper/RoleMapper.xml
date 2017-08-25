@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.mng.mapper.RoleMapper">
+	<resultMap type="Role" id="roleResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="status" column="status" />
+		<result property="creater" column="creater" />
+		<result property="createTime" column="createTime" />
+		<result property="updater" column="updater" />
+		<result property="updateTime" column="updateTime" />
+	</resultMap>
+	
+	<select id="getRoleById" parameterType="Long" resultMap="roleResultMap">
+		SELECT * from jh_role ya WHERE ya.ID = #{id} 
+	</select>
+	
+	<select id="queryAllRoleInfo" resultMap="roleResultMap">
+			select * from jh_role r
+	</select>
+	
+	<select id="queryRoleByConditions"  resultMap="roleResultMap" parameterType="Page">
+			select r.id,r.name,r.description,r.status,r.creater,
+			r.createTime,r.updater,r.updateTime
+ 			 from jh_role r
+ 			Where (1=1) 
+ 			<if test="params.name != null">
+					and r.name like '%${params.name}%'
+				</if>
+				<if test="params.beginTime != null">
+					and r.createTime >= #{params.beginTime}
+				</if>
+				<if test="params.endTime != null">
+					<![CDATA[ and r.createTime <= #{params.endTime} ]]>
+				</if>
+				order by r.updateTime desc
+				
+	</select>
+	
+	<insert id="createRole">
+		<selectKey resultType="long" order="BEFORE" keyProperty="id">  
+			select jh_role_seq.nextval from dual
+	   　</selectKey>  
+		insert into jh_role(id, name, description, status,  creater, createTime, updater, updateTime) 
+		values
+		(#{id}, #{name}, #{description,jdbcType=VARCHAR}, 
+		#{status}, #{creater}, sysdate, #{creater}, sysdate)
+	</insert>
+	
+	<delete id="deleteRoleById" parameterType="long">
+		delete from jh_role where id=#{id}
+	</delete>
+	
+	<update id="updateRole">
+		Update jh_role
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			updater = #{updater}, updateTime = sysdate Where Id=#{id}
+		</set> 
+	</update>
+	
+</mapper>

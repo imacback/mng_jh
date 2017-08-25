@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		<link href="#getCssFolder()/top_css.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" language="javascript" src="#getJs()/login/top.js" charset="UTF-8"></script>
+	</head>
+	<body bgcolor="#03A8F6">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+		    	<td width="194" height="60" align="center" background="#getImageFolder()/top_logo.jpg"></td>
+		    	<td align="center" style="background:url(#getImageFolder()/top_bg.jpg) no-repeat">
+		    		<table cellspacing="0" cellpadding="0" border="0" width="100%" height="33">
+		      			<tbody>
+					        <tr>
+					        	<td width="30" align="left">
+					        		<img onClick="switchBar(this)" height="15" alt="关闭左边管理菜单" src="#getImageFolder()/on-of.gif" width="15" border="0" />
+					        	</td>
+					          	<td width="80" align="right" nowrap="nowrap" class="topbar">
+					          	</td>
+					          	<td class="topbar">
+					          		<a href="showRight.do" target="main">
+					          		<span style="color:black;">欢迎&nbsp;$!{admin.name}&nbsp;登录运营后台系统</span>
+					          		<img title="返回首页" height="23" src="#getImageFolder()/home.gif" width="33" border="0" /></a>&nbsp;
+					          	</td>
+					        </tr>
+		      			</tbody>
+		    		</table>
+		    		<table height="26" border="0" align="left" cellpadding="0" cellspacing="0" class="subbg" name="t1">
+		      			<tbody>
+		        			<tr align="middle">
+		          				<td width="71" height="26" align="center" valign="middle" background="#getImageFolder()/top_tt_bg.gif">
+		          					<a class="STYLE2" href="update.do" target="main">修改密码</a>
+		          				</td>
+		          				<td align="center" class="topbar">
+		          					<span class="STYLE2"> </span>
+		          				</td>
+		          				<td width="71" align="center" valign="middle" background="#getImageFolder()/top_tt_bg.gif">
+		          					<a href="logout.do" target="main" class="STYLE2">退出登录</a>
+		          				</td>
+		        			</tr>
+		      			</tbody>
+		    		</table>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

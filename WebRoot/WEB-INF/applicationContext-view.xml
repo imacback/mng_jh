@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="viewResolver"
+		class="com.jh.mng.util.view.MixedViewResolver">
+		<property name="defaultResolver" value="vm" />
+		<property name="resolvers">
+			<map>
+				<entry key="jsp">
+					<bean
+						class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+						<property name="viewClass"
+							value="org.springframework.web.servlet.view.InternalResourceView" />
+						<property name="prefix"
+							value="/WEB-INF/view/jsp/" />
+						<property name="suffix" value="" />
+					</bean>
+				</entry>
+				<entry key="vm">
+					<bean
+						class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+						<property name="cache" value="true" />
+						<property name="prefix" value="" />
+						<property name="suffix" value="" />
+						<property name="exposeSpringMacroHelpers"
+							value="true" />
+						<property name="exposeRequestAttributes"
+							value="true" />
+						<property name="toolboxConfigLocation"
+							value="/WEB-INF/velocity-toolbox.xml" />
+						<property name="contentType"
+							value="text/html;charset=utf-8" />
+					</bean>
+				</entry>
+				<entry key="do">
+					<bean
+						class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+						<property name="cache" value="true" />
+						<property name="prefix" value="" />
+						<property name="suffix" value="" />
+						<property name="exposeSpringMacroHelpers"
+							value="true" />
+						<property name="exposeRequestAttributes"
+							value="true" />
+						<property name="toolboxConfigLocation"
+							value="/WEB-INF/velocity-toolbox.xml" />
+						<property name="contentType"
+							value="application/x-json;charset=UTF-8" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="velocityConfig"
+		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath"
+			value="/WEB-INF/view/velocity/" />
+		<property name="configLocation"
+			value="/WEB-INF/velocity.properties" />
+	</bean>
+	
+</beans>

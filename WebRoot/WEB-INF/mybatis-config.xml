@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<!-- changes from the defaults -->
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="logImpl" value="LOG4J"/> 
+	</settings>
+	
+		<typeAliases>
+			<typeAlias alias="Admin" type="com.jh.mng.pojo.Admin" />
+			<typeAlias alias="AdminRoleMap" type="com.jh.mng.pojo.AdminRoleMap" />
+			<typeAlias alias="Role" type="com.jh.mng.pojo.Role" />
+			<typeAlias alias="RoleActionMap" type="com.jh.mng.pojo.RoleActionMap" />
+			<typeAlias alias="UriAction" type="com.jh.mng.pojo.UriAction" />
+			<typeAlias alias="Component" type="com.jh.mng.pojo.Component" />
+			<typeAlias alias="GameInfo" type="com.jh.mng.pojo.GameInfo" />
+			<typeAlias alias="ChnlInfo" type="com.jh.mng.pojo.ChnlInfo" />
+			<typeAlias alias="ConsumeInfo" type="com.jh.mng.pojo.ConsumeInfo" />
+			<typeAlias alias="Income" type="com.jh.mng.pojo.Income" />
+			<typeAlias alias="Uri" type="com.jh.mng.pojo.Uri" />
+			<typeAlias alias="Page" type="com.jh.mng.util.page.Page" />
+			<typeAlias alias="ChnlResource" type="com.jh.mng.pojo.ChnlResource" />
+			<typeAlias alias="Mask" type="com.jh.mng.pojo.Mask" />
+			<typeAlias alias="UserLimit" type="com.jh.mng.pojo.UserLimit" />
+			<typeAlias alias="ReceiveSms" type="com.jh.mng.pojo.ReceiveSms" />
+			<typeAlias alias="ChnlDecPercent" type="com.jh.mng.pojo.ChnlDecPercent" />
+			<typeAlias alias="StatusQuery" type="com.jh.mng.pojo.StatusQuery" />
+			<typeAlias alias="ChnlIncomPercent" type="com.jh.mng.pojo.ChnlIncomPercent" />
+			<typeAlias alias="DdoPhone" type="com.jh.mng.pojo.DdoPhone" />
+		</typeAliases>
+		
+	<plugins>
+        <plugin interceptor="com.jh.mng.util.page.PageInterceptor">
+            <property name="databaseType" value="oracle"/>
+        </plugin>
+    </plugins>
+</configuration>

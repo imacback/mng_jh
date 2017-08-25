@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.mng.mapper.OrderMapper">
+
+	
+	<resultMap id="gameInfoResultMap" type="GameInfo">
+		<id property="id" column="id"/>
+		<id property="gameName" column="prodName"/>
+		<id property="contentCode" column="contentCode"/>
+		<id property="feeCode" column="feeCode"/>
+		<id property="busiCode" column="busiCode"/>
+	</resultMap>
+	
+	<resultMap id="chnlInfoResultMap" type="ChnlInfo">
+		<id property="id" column="id"/>
+		<id property="chnlName" column="chnlname"/>
+	</resultMap>
+	
+	<resultMap id="consumeInfoResultMap" type="ConsumeInfo">
+		<id property="id" column="id"/>
+		<id property="fee" column="fee"/>
+		<id property="feeurl" column="feeurl"/>
+		<id property="consumeName" column="consumeName"/>
+		<id property="consumeCode" column="consumeCode"/>
+		<id property="gameInfoId" column="prod_id"/>
+	</resultMap>
+	
+	<resultMap id="chnlResourceResultMap" type="ChnlResource">
+		<id property="id" column="id"/>
+		<id property="chnlId" column="chnl_Id"/>
+		<id property="consumeId" column="consume_Id"/>
+		<id property="startRq" column="startRq"/>
+		<id property="endRq" column="endRq"/>
+		<id property="status" column="status"/>
+	</resultMap>
+	
+	<resultMap id="maskResultMap" type="Mask">
+		<id property="id" column="id"/>
+		<id property="resourceId" column="resource_Id"/>
+		<id property="state" column="state"/>
+	</resultMap>
+	
+	<resultMap id="userLimitResultMap" type="UserLimit">
+		<id property="mdn" column="mdn"/>
+		<id property="rq" column="rq"/>
+		<id property="r_fee" column="r_fee"/>
+		<id property="y_fee" column="y_fee"/>
+	</resultMap>
+	
+	<resultMap id="incomeResultMap" type="Income">
+		<id property="recvtime" column="recvtime"/>
+		<id property="gameId" column="gameId"/>
+		<id property="consumeId" column="consumeId"/>
+		<id property="chnlId" column="chnlId"/>
+		<id property="provinceName" column="provinceName"/>
+		<id property="successTimes" column="successTimes"/>
+		<id property="income" column="income"/>
+		<id property="succTimes" column="succTimes"/>
+		<id property="failtimes" column="failtimes"/>
+		<id property="lastFeeTime" column="lastFeeTime"/>
+		<id property="recvHour" column="recvHour"/>
+	</resultMap>
+	
+	<resultMap id="receiveSmsResultMap" type="ReceiveSms">
+		<id property="id" column="id"/>
+		<id property="recvtime" column="recvtime"/>
+		<id property="userid" column="userid"/>
+		<id property="cpserviceid" column="cpserviceid"/>
+		<id property="consumecode" column="consumecode"/>
+		<id property="cpparam" column="cpparam"/>
+		<id property="hret" column="hret"/>
+		<id property="status" column="status"/>
+		<id property="versionid" column="versionid"/>
+		<id property="transido" column="transido"/>
+		<id property="syncflag" column="syncflag"/>
+		<id property="synctime" column="synctime"/>
+		<id property="syncchnl" column="syncchnl"/>
+		<id property="syncchnltime" column="syncchnltime"/>
+		<id property="chnl_id" column="chnl_id"/>
+		<id property="fee" column="fee"/>
+		<id property="dec_flag" column="dec_flag"/>
+		<id property="state" column="state"/>
+		<id property="packageid" column="packageid"/>
+		<id property="phoneno" column="phoneno"/>
+		<id property="sum_fee_y" column="sum_fee_y"/>
+		<id property="sum_fee_r" column="sum_fee_r"/>
+		<id property="ext" column="ext"/>
+	</resultMap>
+	
+	<resultMap id="chnlDecPercentResultMap" type="ChnlDecPercent">
+		<id property="id" column="id"/>
+		<id property="baseline" column="baseline"/>
+		<id property="percent" column="percent"/>
+		<id property="curday" column="curday"/>
+		<id property="chnl_id" column="chnl_id"/>
+		<id property="state" column="state"/>
+		<id property="packageid" column="packageid"/>
+		<id property="consumecode" column="consumecode"/>
+		<id property="curcnt" column="curcnt"/>
+	</resultMap>
+	
+	<resultMap id="statusQueryResultMap" type="StatusQuery">
+		<id property="hret" column="hret"/>
+		<id property="cpparam" column="cpparam"/>
+		<id property="productName" column="prodname"/>
+		<id property="chnlName" column="chnlName"/>
+		<id property="status" column="status"/>
+		<id property="recvTime" column="recvTime"/>
+		<id property="phoneno" column="phoneno"/>
+		<id property="times" column="times"/>
+		<id property="providerId" column="providerId"/>
+		<id property="consumeName" column="consumename"/>
+		<id property="syncchnl" column="syncchnl"/>
+		<id property="ext" column="ext"/>
+		<id property="state" column="state"/>
+	</resultMap>
+	
+	<resultMap id="chnlIncomePercentResultMap" type="ChnlIncomPercent">
+		<id property="gameName" column="gameName"/>
+		<id property="chnlName" column="chnlName"/>
+		<id property="chnlInCome" column="chnlInCome"/>
+		<id property="sumInCome" column="sumInCome"/>
+		<id property="orderDate" column="orderDate"/>
+		<id property="state" column="state"/>
+	</resultMap>
+	
+	<resultMap id="ddoPhoneResultMap" type="DdoPhone">
+		<id property="phone" column="phone"/>
+	</resultMap>
+	
+	<select id="queryAllGame" resultMap="gameInfoResultMap">
+		select * from t_gameinfo
+	</select>
+	
+	<select id="queryAllChnl" resultMap="chnlInfoResultMap">
+		select * from t_channel
+	</select>
+	
+	<select id="getConsumeListById" resultMap="consumeInfoResultMap">
+		select * from t_consume where prod_id = #{gameId}
+	</select>
+	
+	<select id="queryIncomeListByCons" parameterType="Page" resultMap="incomeResultMap">
+		${params.sql}
+	</select>
+	
+	<select id="queryAllConsume" resultMap="consumeInfoResultMap">
+		select * from t_consume
+	</select>
+	
+	<select id="queryConsumeInfoByCode" resultMap="consumeInfoResultMap">
+		select * from t_consume where consumecode = #{consumeCode} and status = 1
+	</select>
+	
+	<select id="queryResourceByConsumeId" resultMap="chnlResourceResultMap">
+		select * from t_chnlresource where <![CDATA[startrq <= ]]> #{today} and endrq <![CDATA[ >= ]]> #{today}  and consume_id = #{consumeId}
+	</select>
+	
+	<select id="queryMaskByResIdAndState" resultMap="maskResultMap">
+		select * from t_mask where resource_id = #{resourceId} and state = #{state}
+	</select>
+	 
+	<select id="getNextOrderInfoId" resultType="Long">
+		select seq_receivesms_id.nextval from dual
+	</select>
+	
+	<select id="getUserLimitByMdn" resultMap="userLimitResultMap">
+		select * from t_netgame_user_limit where mdn = #{mdn}
+	</select>
+	
+	<update id="updateUserlimit">
+		update t_netgame_user_limit set r_fee = #{r_fee}, y_fee = #{y_fee}, rq = #{rq} where mdn = #{mdn}
+	</update>
+	
+	<select id="sumMonthFee" resultType="Long">
+		${sql}
+	</select>
+	
+	<insert id="createUserLimit">
+		insert into t_netgame_user_limit(mdn,rq,r_fee,y_fee) values( #{mdn}, #{rq}, #{r_fee}, #{y_fee})
+	</insert>
+	
+	<insert id="createReceiveSms" parameterType="ReceiveSms">
+	   insert into t_receivesms(id,recvtime,userid,cpserviceid,consumecode,cpparam,hret,status,versionid,transido,syncflag,synctime,
+	   syncchnl,syncchnltime,chnl_id,fee,dec_flag,state,packageid,phoneno,ext) values(#{id}, sysdate, #{userid},#{cpserviceid},#{consumecode},
+	   #{cpparam},#{hret},#{status},#{versionid},#{transido},#{syncflag},sysdate - 1,#{syncchnl},sysdate - 1,#{chnl_id},#{fee}, #{dec_flag},#{state},
+	   #{packageid},#{phoneno},#{ext,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="queryDecPercent" resultMap="chnlDecPercentResultMap">
+		${sql}
+	</select>
+	
+	<delete id="delPercent2">
+		${sql}
+	</delete>
+	
+	<insert id="createPercent2">
+		${sql}
+	</insert>
+	
+	<update id="updatePercent">
+		update t_chnl_dec_percent set curday = #{today} where id = #{id}
+	</update>
+	
+	<update id="updatePercent2">
+		${sql}
+	</update>
+	
+	<select id="queryStatusByCons" parameterType="Page" resultMap="statusQueryResultMap">
+		${params.sql}
+	</select>
+	
+	<select id="exportStatusByCons" resultMap="statusQueryResultMap">
+		${sql}
+	</select>
+	
+	<select id="queryReceiveSmsById" resultMap="receiveSmsResultMap">
+		select * from t_receivesms where id = #{id}
+	</select>
+	
+	<update id="updateReceiveSms">
+		update t_receivesms 
+		<set>
+			<if test="chnl_id != null">
+				chnl_id = #{chnl_id},
+			</if>
+			<if test="fee != null">
+				fee = #{fee},
+			</if>
+			<if test="hret != null">
+				hret = #{hret},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="syncchnl != null">
+				syncchnl = #{syncchnl},
+			</if>
+			<if test="dec_flag != null">
+				dec_flag = #{dec_flag},
+			</if>
+			<if test="phoneno != null">
+				phoneno = #{phoneno},
+			</if>
+			<if test="state != null">
+				state = #{state},
+			</if>
+			<if test="ext != null">
+				ext = #{ext},
+			</if>
+			<if test="versionid != null">
+				versionid = #{versionid},
+			</if>
+			<if test="transido != null">
+				transido = #{transido}
+			</if>
+		</set>
+		 where id = #{id}
+	</update>
+	
+	<select id="queryReceiveSmsByTransido" resultMap="receiveSmsResultMap">
+		select * from t_receivesms where transido = #{transido}
+	</select>
+	
+	<select id="queryReceiveSmsByExt" resultMap="receiveSmsResultMap">
+		select * from t_receivesms where ext = #{ext}
+	</select>
+	
+	<select id="getStateByMobile" resultType="Integer">
+		${sql}
+	</select>
+	
+	<select id="exportIncomeListByCons" resultMap="incomeResultMap">
+		${sql}
+	</select>
+	
+	<select id="getChnlInfoById" resultMap="chnlInfoResultMap">
+		select * from t_channel where id = #{id} 
+	</select>
+	
+	<select id="getGameInfoByChnlId" resultMap="gameInfoResultMap">
+		${sql}
+	</select>
+	
+	<select id="getSuccessTime" resultType="Integer">
+		${sql}
+	</select>
+	
+	<select id="getUnknowMobile" resultType="String">
+		${sql}
+	</select>
+	
+	<select id="queryIncomePercent" parameterType="Page" resultMap="chnlIncomePercentResultMap">
+		${params.sql}
+	</select>
+	
+	<select id="getDdoPhoneByPhone" resultMap="ddoPhoneResultMap">
+		select * from t_ddophone where phone = #{phone}
+	</select>
+	
+	<insert id="createDdoPhone">
+		insert into t_ddophone (phone) values(#{phone})
+	</insert>
+	
+	<update id="createSmsHaoduan">
+		${sql}
+	</update>
+	
+	<select id="queryResourceByChnlId" resultMap="chnlResourceResultMap">
+		select * from t_chnlresource where chnl_id = #{chnlId}
+	</select>
+	
+	<select id="getCityIncome" resultMap="receiveSmsResultMap">
+		${sql}
+	</select>
+	
+	<update id="updateCityName">
+		${sql}
+	</update>
+	
+	<select id="getGameInfoById" resultMap="gameInfoResultMap">
+		select * from t_gameinfo where id = #{id} 
+	</select>
+	
+	<select id="getConsumeInfoById" resultMap="consumeInfoResultMap">
+		select * from t_consume where id = #{id}
+	</select>
+	
+	<select id="queryListByCondition" parameterType="ReceiveSms" resultMap="receiveSmsResultMap">
+		select * from t_receivesms where 1 = 1 
+		<if test="consumecode != null">
+			and consumecode = #{consumecode}
+		</if>
+		<if test="ext != null">
+			and ext = #{ext}
+		</if>
+	</select>
+</mapper>

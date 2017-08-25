@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		<link href="#getCssFolder()/css.css" rel="stylesheet" type="text/css" />		
+		<script type="text/javascript" language="javascript" src="#getJs()/My97DatePicker/WdatePicker.js" charset="UTF-8"></script>
+		<script type="text/javascript" language="javascript" src="#getJs()/jquery-1.8.0.js" charset="UTF-8"></script>
+        <script type="text/javascript" language="javascript" src="#getJs()/order/chnlincomeList.js"></script>
+		<script type="text/javascript" language="javascript" src="#getJs()/util.js" charset="UTF-8"></script>
+    </head>
+	<body>
+		<table class="table" cellspacing="1" cellpadding="2" width="99%" align="center" border="0">
+			<tbody>
+				<tr>
+					<th class="bg_tr_new" colspan="2" height="40">您现在的位置 > 收入管理 >  #if(${_decFlag} == 0)渠道收入查询 #else 收入查询(含超量) #end
+					</th>
+				</tr>
+			</tbody>
+		</table>
+		<form method="post" action="queryIncome.do" name="myform" id="myform">
+			<table class="table" cellspacing="1" cellpadding="2" width="99%" align="center" border="0">
+                <tbody>
+					<input type="hidden" id="decFlag" name="decFlag" value="$!{_decFlag}"/>
+    				<tr>
+                        <th class="bg_tr_new" style="text-align:left;" height="30">
+							订单统计
+						</th>
+                    </tr>
+					<tr>
+                        <td class="td_bg"  style="text-align:left;">
+							业务名称：
+							<select name="gameInfoId" id="gameInfoId">
+								<option value="">--请选择业务--</option>
+								#foreach(${gameInfo} in ${gameList})
+									<option value="$!{gameInfo.id}" #if(${gameInfo.id} == ${_gameInfoId}) selected="selected"  #end>$!{gameInfo.gameName}</option>
+								#end
+                            </select>&nbsp;&nbsp;
+							道具名称：
+							<input type="hidden" id="getConsumeUrl" value="#getWebAppRootPath()order/getConsumeInfo.do">
+							<select name="consumeId" id="consumeId">
+									<option value="">--请选择道具--</option>
+									#foreach($consumeInfo in $!consumeList)
+										<option value="$!{consumeInfo.id}" #if($consumeInfo.id == ${_consumeId}) selected="selected" #end >$!{consumeInfo.consumeName}</option>
+									#end
+							</select>&nbsp;&nbsp;
+							渠道名称：
+							<select name="chnlInfoId" >
+								#if(!${_isCp})
+									<option value="">--请选择渠道--</option>
+								#end
+								#foreach($chnlInfo in $!chnlList)
+									<option value="$!{chnlInfo.id}" #if($chnlInfo.id == ${_chnlInfoId}) selected="selected" #end >$!{chnlInfo.chnlName}</option>
+								#end
+							</select>
+							省份：
+							<select name="providerId" >
+									<option value="">--请选择省份--</option>
+									<option value="未知" #if(${_providerId} == "未知") selected="selected" #end>未知</option>
+    								<option value="安徽" #if(${_providerId} == "安徽") selected="selected" #end>安徽</option>
+                        			<option value="北京" #if(${_providerId} == "北京") selected="selected" #end>北京</option>
+                        			<option value="福建" #if(${_providerId} == "福建") selected="selected" #end>福建</option>
+                        			<option value="甘肃" #if(${_providerId} == "甘肃") selected="selected" #end>甘肃</option>
+                        			<option value="广东" #if(${_providerId} == "广东") selected="selected" #end>广东</option>
+                        			<option value="广西" #if(${_providerId} == "广西") selected="selected" #end>广西</option>
+                        			<option value="贵州" #if(${_providerId} == "贵州") selected="selected" #end>贵州</option>
+                        			<option value="海南" #if(${_providerId} == "海南") selected="selected" #end>海南</option>
+                        			<option value="河北" #if(${_providerId} == "河北") selected="selected" #end>河北</option>
+                        			<option value="河南" #if(${_providerId} == "河南") selected="selected" #end>河南</option>
+                        			<option value="黑龙江" #if(${_providerId} == "黑龙江") selected="selected" #end>黑龙江</option>
+                        			<option value="湖北" #if(${_providerId} == "湖北") selected="selected" #end>湖北</option>
+                        			<option value="湖南" #if(${_providerId} == "湖南") selected="selected" #end>湖南</option>
+                        			<option value="吉林" #if(${_providerId} == "吉林") selected="selected" #end>吉林</option>
+                        			<option value="江苏" #if(${_providerId} == "江苏") selected="selected" #end>江苏</option>
+                        			<option value="江西" #if(${_providerId} == "江西") selected="selected" #end>江西</option>
+                        			<option value="辽宁" #if(${_providerId} == "辽宁") selected="selected" #end>辽宁</option>
+                        			<option value="内蒙古" #if(${_providerId} == "内蒙古") selected="selected" #end>内蒙古</option>
+                        			<option value="宁夏" #if(${_providerId} == "宁夏") selected="selected" #end>宁夏</option>
+                        			<option value="青海" #if(${_providerId} == "青海") selected="selected" #end>青海</option>
+                        			<option value="山东" #if(${_providerId} == "山东") selected="selected" #end>山东</option>
+                        			<option value="山西" #if(${_providerId} == "山西") selected="selected" #end>山西</option>
+                        			<option value="陕西" #if(${_providerId} == "陕西") selected="selected" #end>陕西</option>
+                        			<option value="上海" #if(${_providerId} == "上海") selected="selected" #end>上海</option>
+                        			<option value="四川" #if(${_providerId} == "四川") selected="selected" #end>四川</option>
+                        			<option value="天津" #if(${_providerId} == "天津") selected="selected" #end>天津</option>
+                        			<option value="西藏" #if(${_providerId} == "西藏") selected="selected" #end>西藏</option>
+                        			<option value="新疆" #if(${_providerId} == "新疆") selected="selected" #end>新疆</option>
+                        			<option value="云南" #if(${_providerId} == "云南") selected="selected" #end>云南</option>
+                        			<option value="浙江" #if(${_providerId} == "浙江") selected="selected" #end>浙江</option>
+                        			<option value="重庆" #if(${_providerId} == "重庆") selected="selected" #end>重庆</option>
+							</select>&nbsp;&nbsp;
+						</td>
+					</tr>
+					<tr>
+						<td class="td_bg"  style="text-align:left;">
+					##		订单月份：
+					##		<input type="text"  name="month" id="month" size="8" value="$!{_month}" onfocus="WdatePicker({startDate:'%y-%M-01',dateFmt:'yyyyMM',alwaysUseStartDate:true})"/>
+					##		&nbsp;&nbsp;
+							订单日期：
+							<input type="text"  name="startDay" id="startDay" size="8" value="$!{_startDay}" onfocus="WdatePicker({startDate:'%y-%M-01',dateFmt:'yyyyMMdd',alwaysUseStartDate:true})"/>
+							——
+							<input type="text"  name="endDay" id="endDay" size="8" value="$!{_endDay}" onfocus="WdatePicker({startDate:'%y-%M-01',dateFmt:'yyyyMMdd',alwaysUseStartDate:true})"/>
+						</td>
+                    </tr>	
+					<tr>
+						<td class="td_bg"  style="text-align:left;">
+							分组条件：
+							#foreach(${groupInfo} in $!{groupList})
+								<input type="checkBox" name="groupCondition" #if(${groupInfo.isChecked} == 1) checked=checked #end value="$!{groupInfo.code}">$!{groupInfo.desc}</input>
+							#end
+                        </td>	
+					</tr>
+					<tr>
+						<td class="td_bg" style="text-align:left;">
+							<input type="button" id="search" value="查 询"  style="width: 60px;"/>&nbsp;&nbsp;
+							<input type="button" id="export" value="导 出"  style="width: 60px;"/>&nbsp;&nbsp;
+						</td>
+					</tr>
+				</tbody>
+            </table>
+        </form>
+		<form action="queryIncome.do" method="post" name="pagedform" id="pagedform">
+			<table class="table" cellspacing="1" cellpadding="2" width="99%" align="center" border="0">
+				<tbody>
+					<tr align="center">
+						<td class="bg_tr" width="1%">
+							序号
+						</td>
+						#foreach(${groupConditions} in ${groupConditionList})
+							<td class="bg_tr" width="2%" height="23">${groupConditions}</td>
+						#end
+						<td class="bg_tr" width="2%" height="23">成功次数</td>
+						<td class="bg_tr" width="2%" height="23">收入</td>
+					</tr>
+					#set($countTimes = 0)
+					#set($countIncome = 0)
+					#foreach($income in $!{incomeList})
+						#set($countTimes = $countTimes + $!{income.successTimes})
+						#set($countIncome =  $math.toDouble($countIncome) + $math.toDouble($!{income.income}))
+						<tr align="center">
+							<td class="td_bg">${velocityCount}</td>
+							#foreach(${groupProperty} in ${income.valueList})
+								<td class="td_bg">$!{groupProperty}</td>
+							#end
+							<td class="td_bg">$!{income.successTimes}</td>
+							<td class="td_bg">$!{income.income}</td>
+						</tr>
+					#end
+					<tr>
+						<td class="td_bg" align="center" colspan="${colspanpage}" style="border-left: 0px;">
+							#renderPageInfo(${pagedModelList})
+			               	<input  type="hidden" id="pageId" name="pageId" value="$!{pagedModelList.pageId}" />
+							<input type="hidden" id="decFlag" name="decFlag" value="$!{_decFlag}"/>
+			               	<input  type="hidden" name="gameInfoId" value="$!{_gameInfoId}" />
+							<input  type="hidden" name="consumeId" value="$!{_consumeId}" />
+			               	<input  type="hidden" name="chnlInfoId" value="$!{_chnlInfoId}" />
+			               	<input  type="hidden" name="providerId" value="$!{_providerId}" />
+							<input  type="hidden" name="startDay" value="$!{_startDay}" />
+			               	<input  type="hidden" name="endDay" value="$!{_endDay}" />
+							<input  type="hidden" name="month" value="$!{_month}" />
+			               	#foreach(${groupInfo} in $!{groupList})
+								#if(${groupInfo.isChecked} == 1)
+									<input type="hidden" name="groupCondition" value="$!{groupInfo.code}"></input>
+								#end
+							#end
+			               	<input  type="hidden" id="pageNum" name="pageNum" value="$!{pagedModelList.pageCount}" />
+			            </td>
+						<td class="td_bg" align="center" colspan="1">
+							次数总计：$countTimes
+                        </td>
+						<td class="td_bg" align="center" colspan="1">
+							收入总计：$number.format("#0.00", $countIncome)  
+                        </td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+    </body>
+</html>

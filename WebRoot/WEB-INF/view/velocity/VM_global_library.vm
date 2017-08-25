@@ -1,0 +1,24 @@
+##----------------------------------------------------------------------------------------------------##
+
+#macro (getJs)#getWebAppRootPath()resource/js#end
+#macro( getImageFolder )#getWebAppRootPath()resource/images#end
+#macro ( getCssFolder )#getWebAppRootPath()resource/css#end
+#macro( getPic )#getWebAppRootPath()resource/images#end
+#macro( getWebAppRootPath )http://localhost:8080/mng_jh/#end
+####分页
+
+#macro( renderPageInfo $pagedModelList )
+#if (${pagedModelList.pageId} > 1)
+<a href="javascript:prev()">上一页</a>&nbsp;#end
+共$!{pagedModelList.totalCount}条记录&nbsp;第$!{pagedModelList.pageId}/$!{pagedModelList.pageCount}页&nbsp;
+<select name="pageList" onchange="_submitPaged(this.options[this.selectedIndex].value)">
+#foreach($p in [1..${pagedModelList.pageCount}])
+  <option value="$p"#if ($p==${pagedModelList.pageId}) selected="true"#end>$p</option>
+#end
+</select>
+#if (${pagedModelList.pageId} < ${pagedModelList.pageCount})
+&nbsp;<a href="javascript:next()">下一页</a>#end
+#end	
+	
+
+

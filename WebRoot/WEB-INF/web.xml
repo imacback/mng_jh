@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>jhopmng</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.util.Log4jConfigListener
+		</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/applicationContext.xml,/WEB-INF/applicationContext-view.xml
+		</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>springDispatcher</servlet-name>
+		<servlet-class>
+			org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springDispatcher</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+		<!-- 登录session过滤 -->
+	<filter>
+		<filter-name>SessionFilter</filter-name>
+		<filter-class>
+			com.jh.mng.util.filter.SessionFilter
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SessionFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
+	<!-- 根路径/过滤器 -->
+	<filter>
+		<filter-name>RootApplicatonFilter</filter-name>
+		<filter-class>
+			com.jh.mng.util.filter.RootApplicationFilter
+		</filter-class>
+		<init-param>
+			<param-name>indexPage</param-name>
+			<param-value>login/index.do</param-value>
+		</init-param>
+
+	</filter>
+	<filter-mapping>
+		<filter-name>RootApplicatonFilter</filter-name>
+		<url-pattern>/</url-pattern>
+	</filter-mapping>
+	
+	
+	<!-- Filter 登陆过滤开始 -->   
+	<filter>
+		<filter-name>URIFilter</filter-name>
+		<filter-class>
+			com.jh.mng.util.filter.URIFilter
+		</filter-class>
+		<init-param>
+			<param-name>adminServiceName</param-name>
+			<param-value>IAdminService</param-value>
+		</init-param>
+		<init-param>
+			<param-name>exceptOption</param-name>
+			<param-value>login/login.do,login/error.do,login/index.do,login/rand.do,login/showTop.do,login/showLeft.do,login/showRight.do,login/logout.do,login/update.do,login/updatePassword.do,refuse_for_invalidip.jsp,ds
+			</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>URIFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>  
+ 	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error.html</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error.html</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/error.html</location>
+	</error-page>
+	<session-config>
+		<session-timeout>20</session-timeout>
+	</session-config>
+	 
+
+</web-app>

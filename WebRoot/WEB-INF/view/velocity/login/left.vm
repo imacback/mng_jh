@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title></title>
+	<link href="#getCssFolder()/left_css.css" rel="stylesheet" type="text/css">
+</head>
+<script language="javascript">
+	function showsubmenu(sid)
+	{
+		var submenu = eval("submenu" + sid);
+		if (submenu.style.display == "none"){
+			eval("submenu" + sid + ".style.display=\"\";");
+		}else{
+			eval("submenu" + sid + ".style.display=\"none\";");
+		}
+	}
+</script>
+<body bgcolor="#16ACFF">
+	<table width="98%" border="0" cellpadding="0" cellspacing="0" style="background:url(#getImageFolder()/tablemde.jpg) repeat-y">
+  		#set($i = 1)
+  		#foreach($data in $componentActionMap.entrySet())
+  		<tr>
+    		<td height="5" background="#getImageFolder()/tableline_top.jpg" bgcolor="#16ACFF"></td>
+  		</tr>
+  		<tr>
+    		<td>
+    			<table width="97%" border="0" align="right" cellPadding="0" cellspacing="0" class="leftframetable">
+      				<tbody>
+        				<tr>
+          					<td height="25" style="background:url(#getImageFolder()/left_tt.gif) no-repeat">
+            					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              						<tr>
+                						<td width="20"></td>
+          								<td class="STYLE1" style="cursor: hand" onclick="showsubmenu($i);" height="25">
+          									$!{data.value.get(0).component.name}
+          								</td>
+              						</tr>
+            					</table>
+            	            </td>
+          				</tr>
+        				<tr>
+          					<td>
+          						<table id="submenu$!{i}" cellspacing="0" cellPadding="0" width="100%" border="0">
+              						<tbody>
+              							#foreach($action in $!{data.value})
+											#if($!{action.uriAction.actionType} == 1)
+                        						<tr>
+                          							<td width="2%"><img src="#getImageFolder()/closed.gif"></td>
+                          							<td height="23">
+                          							<a href="#getWebAppRootPath()$!{action.uriAction.uri.uri}/$!{action.uriAction.actionValue}.do" target="main">$!{action.uriAction.name}</a>
+                          							</td>
+                        						</tr>
+											#end
+                						#end
+              						</tbody>
+          						</table>
+          					</td>
+        				</tr>
+      				</tbody>
+    			</table>
+    		</td>
+  		</tr>
+	<tr>
+    	<td height="5" background="#getImageFolder()/tableline_bottom.jpg" bgcolor="#16ACFF"></td>
+  	</tr>
+  	#set($i = $i + 1)
+  	#end
+</table>
+</body>
+</html>

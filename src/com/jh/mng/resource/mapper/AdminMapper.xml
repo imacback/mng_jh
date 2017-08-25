@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jh.mng.mapper.AdminMapper">
+
+	<resultMap type="Admin" id="adminResultMap">
+		<id property="id" column="id"/>
+		<result property="name" column="username"/>
+		<result property="password" column="psd"/>
+		<result property="type" column="usertype"/>
+		<result property="status" column="status"/>
+		<result property="realName" column="realName"/>
+		<result property="idCard" column="idCard"/>
+		<result property="tel" column="tel" />
+		<result property="email" column="email" />
+		<result property="address" column="address" />
+		<result property="isRoot" column="isRoot" />
+		<result property="cpId" column="cpId" />
+		<result property="creater" column="creater" />
+		<result property="createTime" column="createTime" />
+		<result property="updater" column="updater" />
+		<result property="updateTime" column="updateTime" />
+		
+		<association property="roleInfo" column="roleId" javaType="Role" resultMap="roleResultMap">
+		</association>
+	</resultMap>
+	
+	<resultMap id="roleResultMap" type="Role">
+		<id property="id" column="roleId"/>
+		<id property="name" column="roleName"/>
+		<id property="description" column="description"/>
+	</resultMap>
+	 
+	<!-- 查询角色，根据id -->
+	<select id="getAdminById" parameterType="Long" resultMap="adminResultMap">
+		SELECT * from jh_admin yr WHERE yr.ID = #{id} 
+	</select>
+	
+	<select id="getAdminMoreById" parameterType="Long" resultMap="adminResultMap">
+		select a.Id,a.userName,a.psd,a.userType,a.status,a.realName,a.idCard,a.tel,a.email,a.address,
+		a.isRoot,a.creater,a.createTime,a.updater,a.updateTime,
+		r.Id As roleId,r.Name As roleName,r.Description
+		from jh_admin a 
+        Left Join jh_adminRoleMap ar On a.Id = ar.adminId
+        Left Join jh_role r On ar.roleId = r.Id  
+        where a.id = #{id}
+	</select>
+	
+	<select id="getAdminByContidions" resultMap="adminResultMap">
+			select a.Id,a.userName,a.psd,a.userType,a.status,a.realName,a.idCard,a.tel,a.email,a.address, a.cpId from jh_admin a 
+			<where>
+				<if test="name != null">
+					a.username = #{name}
+				</if>
+				<if test="password != null">
+					and a.psd = #{password}
+				</if>
+				<if test="type != null">
+					and a.usertype = #{type}
+				</if>
+				<if test="status != null">
+					and a.status = #{status}
+				</if>
+				<if test="isRoot != null">
+					and a.isRoot = #{isRoot}
+				</if>
+			</where>
+	</select>
+	
+	<update id="updatePwdById">
+		update jh_admin set psd = #{newPwd}, updater = #{updater}, updateTime = sysdate where id = #{id}
+	</update>
+	
+	<select id="queryAdminByConditions"  resultMap="adminResultMap" parameterType="Page">
+			select a.Id,a.userName,a.psd,a.userType,a.status,a.realName,a.idCard,a.tel,a.email,a.address,
+			a.isRoot,a.creater,a.createTime,a.updater,a.updateTime,
+			r.Id As roleId,r.Name As roleName,r.Description
+			from jh_admin a
+       		Left Join jh_adminRoleMap ar On a.Id = ar.adminId
+        	Left Join jh_role r On ar.roleId = r.Id  
+			where isRoot = '0' 
+				<if test="params.userName != null">
+					and a.userName like '%${params.userName}%'
+				</if>
+				<if test="params.userType != null">
+					and a.userType = #{params.userType} 
+				</if>
+				<if test="params.cpId != null">
+					and a.cpId = #{params.cpId}
+				</if>
+				<if test="params.beginTime != null">
+					and a.createTime >= #{params.beginTime}
+				</if>
+				<if test="params.endTime != null">
+					<![CDATA[ and a.createTime <= #{params.endTime} ]]>
+				</if>
+			order by a.updateTime desc
+	</select>
+	
+	<select id="queryAdminOtherWriteByConditions"  resultMap="adminResultMap" parameterType="Page">
+		select
+		a.Id,a.userName,a.psd,a.userType,a.status,a.realName,a.idCard,a.tel,a.email,a.address,
+		a.isRoot,a.creater,a.createTime,a.updater,a.updateTime,r.Id As roleId,r.Name As
+		roleName,r.Description from jh_admin a Left Join
+		jh_adminRoleMap ar On a.Id = ar.adminId Left Join jh_role r
+		On ar.roleId = r.Id
+		<if test="params.userName != null">
+			and a.userName like '%${params.userName}%'
+		</if>
+		<if test="params.userType != null">
+			and a.userType = #{params.userType}
+		</if>
+		<if test="params.beginTime != null">
+			and a.createTime >= #{params.beginTime}
+		</if>
+		<if test="params.endTime != null">
+			<![CDATA[ and a.createTime <= #{params.endTime} ]]>
+		</if>
+		order by a.updateTime desc
+	</select>
+	
+	<select id="queryAdminByCpId" resultMap="adminResultMap" parameterType="Long">
+		SELECT * from jh_admin yr WHERE yr.cpId = #{cpId} 
+	</select>
+	
+	<insert id="createAdmin">
+		<selectKey resultType="long" order="BEFORE" keyProperty="id">  
+			select jh_admin_seq.nextval from dual
+	   　</selectKey>  
+		insert into jh_Admin(id, userName, psd, userType, status, realName, idCard, 
+		tel, email, address, isRoot, cpId, creater, createTime, updater, updateTime) 
+		values
+		(#{id}, #{name}, #{password}, #{type}, #{status}, #{realName,jdbcType=VARCHAR}, 
+		#{idCard,jdbcType=VARCHAR}, #{tel,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},#{isRoot}, #{cpInfo.id},#{creater}, sysdate, #{creater}, sysdate)
+	</insert>
+	
+	<delete id="deleteAdminById" parameterType="long">
+		delete from jh_admin where id=#{id}
+	</delete>
+	
+	<update id="updateAdmin">
+		Update jh_admin
+		<set>
+			<if test="name != null">
+				userName = #{name},
+			</if>
+			<if test="type != null">
+				userType = #{type},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			realName = #{realName,jdbcType=VARCHAR},
+			idCard = #{idCard,jdbcType=VARCHAR},
+			tel = #{tel,jdbcType=VARCHAR},
+			email = #{email,jdbcType=VARCHAR},
+			address = #{address,jdbcType=VARCHAR},
+			<if test="isRoot != null">
+				isRoot = #{isRoot},
+			</if>
+			<if test="cpInfo.id != null">
+				cpId = #{cpInfo.id},
+			</if>
+			updater = #{updater}, updateTime = sysdate Where Id=#{id}
+		</set> 
+	</update>
+	
+</mapper>

@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		<link href="#getCssFolder()/css.css" rel="stylesheet" type="text/css">
+	</head>
+	<style type="text/css">
+		 .table td{
+		  text-align:left;
+		 }
+	</style>
+	<body> 
+		 <table class="table" cellspacing="1" cellpadding="2" width="99%" align="center" border="0">
+			<tbody>
+				<tr>
+		      		<th class="bg_tr_new" style="font-size:15px;"  colspan="2">您现在的位置 > 登录管理 > 修改登录密码
+		     		</th>
+		    	</tr>
+			</tbody>
+		</table>
+	    <table class="table" cellspacing="1" cellpadding="2" width="99%" align="center" border="0">
+			<tbody>
+				<tr>
+			   		<th class="bg_tr_new"  height="30" align="left">
+			   			<span style="font-family:宋体;font-size:15px;font-weight:bold;font-style:normal;text-decoration:none;color:blue;">
+			   				修改密码成功！
+			   			</span>	
+			   		</th>
+			   	</tr>
+			</tbody>
+		</table>
+ 	</body>
+</html>

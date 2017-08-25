@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		<link href="#getCssFolder()/css.css" rel="stylesheet" type="text/css" />		
+		<script type="text/javascript" language="javascript" src="#getJs()/My97DatePicker/WdatePicker.js" charset="UTF-8"></script>
+		<script type="text/javascript" language="javascript" src="#getJs()/jquery-1.8.0.js" charset="UTF-8"></script>
+        <script type="text/javascript" language="javascript" src="#getJs()/admin/adminList.js"></script>
+		<script type="text/javascript" language="javascript" src="#getJs()/util.js" charset="UTF-8"></script>
+    </head>
+	<body>
+		<table class="table" cellspacing="1" cellpadding="2" width="99%" align="center" border="0">
+			<tbody>
+				<tr>
+					<th class="bg_tr_new" colspan="2" height="40">您现在的位置 > 用户角色管理 > 用户管理
+					</th>
+				</tr>
+			</tbody>
+		</table>
+		<form method="post" action="queryAdminList.do" name="myform" id="myform">
+			<table class="table" cellspacing="1" cellpadding="2" width="99%" align="center" border="0">
+                <tbody>
+    				<tr>
+                        <th class="bg_tr_new" style="text-align:left;" height="30">
+							用户管理
+						</th>
+                    </tr>
+					<tr>
+                        <td class="td_bg" >
+							管理员名称：
+							<input type="text" name="userName" size="20" value="$!{_userName}" />&nbsp;&nbsp;
+                           
+							管理员类型：
+							<select name="userType" >
+								<option value="">--请选择管理员类型--</option>
+								<option value="1" #if($!{_userType}==1) selected="selected" #end>运营管理员</option>
+								<option value="2" #if($!{_userType}==2) selected="selected" #end>CP管理员</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="td_bg" style="text-align:left;">
+							发布时间：
+							<input id="starttime" name="beginTime" value="$!{_beginTime}" onfocus="WdatePicker({startDate:'%y-%M-01',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true})" size="20" /> 
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							至
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input id="endtime" name="endTime" value="$!{_endTime}" onfocus="WdatePicker({startDate:'%y-%M-01',dateFmt:'yyyy-MM-dd',alwaysUseStartDate:true})" size="20" />
+							&nbsp;&nbsp;
+						</td>
+					</tr>
+					<tr>
+						<td class="td_bg" style="text-align:left;">
+							<input type="button" id="search" value="搜 索"  style="width: 60px;"/>&nbsp;&nbsp;
+							<input type="button" id="add" value="新增用户" style="width: 100px;" />
+						</td>
+					</tr>
+				</tbody>
+            </table>
+        </form>
+		<form action="queryAdminList.do" method="post" name="pagedform" id="pagedform">
+			<table class="table" cellspacing="1" cellpadding="2" width="99%" align="center" border="0">
+				<tbody>
+					<tr align="center">
+						<td class="bg_tr" width="3%">
+							序号
+						</td>
+						<td class="bg_tr" width="6%" height="23">管理员名称</td>
+						<td class="bg_tr" width="6%" height="23">管理员类型</td>
+						<td class="bg_tr" width="5%" height="23">有效状态</td>
+						<td class="bg_tr" width="5%" height="23">真实姓名</td>
+						<td class="bg_tr" width="5%" height="23">身份证号</td>
+						<td class="bg_tr" width="6%" height="23">电话</td>
+						<td class="bg_tr" width="4%" height="23">邮箱</td>
+						<td class="bg_tr" width="4%" height="23">地址</td>
+						<td class="bg_tr" width="5%" height="23">CP</td>
+						<td class="bg_tr" width="5%" height="23">所属角色</td>
+						<td class="bg_tr" width="4%" height="23">创建人</td>
+						<td class="bg_tr" width="11%" height="23">创建时间</td>
+						<td class="bg_tr" width="4%" height="23">修改人</td>
+						<td class="bg_tr" width="11%" height="23">修改时间</td>
+						<td class="bg_tr" width="9%" height="23">操作</td>
+					</tr>
+					#foreach($info in $!adminList)
+						<tr align="center">
+							<td class="td_bg">$!{info.id}</td>
+							<td class="td_bg">$!{info.name}</td>
+							<td class="td_bg">
+								#if($!{info.type}==1)
+									运营管理员
+								#else
+									CP管理员
+								#end
+							</td>
+							<td class="td_bg">
+								#if($!{info.status}==1)
+									有效
+								#else
+									无效
+								#end
+							</td>
+							<td class="td_bg">$!{info.realName}</td>
+							<td class="td_bg">$!{info.idCard}</td>
+							<td class="td_bg">$!{info.tel}</td>
+							<td class="td_bg">$!{info.email}</td>
+							<td class="td_bg">$!{info.address}</td>
+							<td class="td_bg">
+								$!{info.cpInfo.name}
+							</td>
+							<td class="td_bg">$!{info.roleInfo.description}</td>
+							<td class="td_bg">$!{info.creater}</td>
+							<td class="td_bg">$!{fullDate.format($!{info.createTime})}</td>
+							<td class="td_bg">$!{info.updater}</td>
+							<td class="td_bg">$!{fullDate.format($!{info.updateTime})}</td>
+							<td class="td_bg">
+								<a id="" href="preUpdateAdmin.do?id=$!{info.id}">修改</a>	
+						##		<a onclick="delAdminList('$!{info.id}')"  href="javascript:void(0);">删除</a>
+							</td>
+						</tr>
+					#end
+					<tr>
+						<td class="td_bg" align="center" colspan="16" style="border-left: 0px;">
+							#renderPageInfo(${pagedModelList})
+			               	<input  type="hidden" id="pageId" name="pageId" value="$!{pagedModelList.pageId}" />
+			               	<input  type="hidden" name="userType" value="$!{_userType}" />
+			               	<input  type="hidden" name="userName" value="$!{_userName}" />
+			               	<input  type="hidden" name="beginTime" value="$!{_beginTime}" />
+			               	<input  type="hidden" name="endTime" value="$!{_endTime}" />
+			               	<input  type="hidden" id="pageNum" name="pageNum" value="$!{pagedModelList.pageCount}" />
+			            </td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+    </body>
+</html>

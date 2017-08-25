@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<script type="text/javascript" language="javascript" src="#getJs()/jquery-1.8.0.js" charset="UTF-8"></script>
+		<script type="text/javascript" language="javascript" src="#getJs()/admin/adminInfo.js" charset="UTF-8"></script>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<tilte></title>
+		<link href="#getCssFolder()/css.css" rel="stylesheet" type="text/css" >
+		
+        <style type="text/css">
+			.head{font-family:宋体;font-size:15px;font-weight:bold;font-style:normal;text-decoration:none;color:blue;}
+			.td_name{color:red;}
+		</style>
+	</head>
+	
+<body>
+		<table class="table" width="99%" align="center" border="0">
+			<tbody>
+				<tr>
+					<th class="bg_tr" style="font-size:15px;text-align:left;">用户角色管理 > 修改用户</th>
+				</tr>
+			</tbody>
+		</table>
+		
+		<form action="updateAdmin.do" method="post" id="updateAdmin" name="updateAdmin">
+			<input id="id" name="id" type="hidden" value="$!{adminInfo.id}"/>
+			<input id="psd" name="psd" type="hidden" value="$!{adminInfo.psd}"/>
+			
+			<table class="table" width="99%" align="center" border="0">
+				<tr>
+					<td class="bg_tr" colspan="2">
+						<span class="head">
+							修改用户
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="td_bg" align="right">
+						<span class="td_name">*</span>管理员名称：
+					</td>
+					<td class="td_bg">
+						<input id="userName" maxlength="14" name="userName" width="200" height="25" type="text" value="$!{adminInfo.getName()}"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="td_bg" align="right">
+						管理员类型：
+					</td>
+					<td class="td_bg">
+						<select name="userType" style="width:154px">
+							<option value="1" #if($!{adminInfo.type}==1) selected="selected" #end>运营管理员</option>
+							<option value="2" #if($!{adminInfo.type}==2) selected="selected" #end>CP管理员</option>
+						</select>
+					</td>   
+				</tr>
+				<tr>
+					<td class="td_bg" align="right">
+						所属角色：
+					</td>
+					<td class="td_bg">
+						<select name="roleId" style="width:154px">
+							#foreach($roleInfo in $!roleList)
+								<option value="$!{roleInfo.id}" #if($!{adminInfo.roleInfo.id}==$!{roleInfo.id}) selected="selected" #end>
+										$!{roleInfo.description}
+								</option>
+							#end
+						</select>
+					</td>   
+				</tr>
+				<tr>	
+					<td class="td_bg" align="right">
+						有效状态：
+					</td>
+					<td class="td_bg">
+						<select name="status" style="width:154px">
+							<option value="1" #if($!{adminInfo.status}==1) selected="selected" #end>有效</option>
+							<option value="2" #if($!{adminInfo.status}==2) selected="selected" #end>无效</option>
+						</select>
+					</td>   
+				</tr>
+				<tr>
+					<td class="td_bg" align="right">
+						真实姓名：
+					</td>
+					<td class="td_bg">
+						<input id="realName" maxlength="32" name="realName" width="200" height="25" type="text" value="$!{adminInfo.realName}"/>
+					</td>     
+				</tr>
+				<tr>
+					<td class="td_bg" align="right">
+						身份证号：
+					</td>
+					<td class="td_bg">
+						<input id="idCard" maxlength="20" name="idCard" width="200" height="25" type="text" value="$!{adminInfo.idCard}"/>
+					</td>   
+				</tr>
+				<tr id="posname">
+					<td class="td_bg" align="right">
+						电话：
+					</td>
+					<td class="td_bg">
+						<input id="tel" maxlength="14" name="tel" width="200" height="25" type="text" value="$!{adminInfo.tel}"/>
+					</td>   
+				</tr>
+				<tr>
+					<td class="td_bg" align="right">
+						邮箱：
+					</td>
+					<td class="td_bg">
+						<input id="email" maxlength="30" name="email" width="200" height="25" type="text" value="$!{adminInfo.email}"/>
+					</td>   
+				</tr>
+				<tr>
+					<td class="td_bg" align="right">
+						地址：
+					</td>
+					<td class="td_bg">
+						<input id="address" maxlength="30" name="address" width="200" height="25" type="text" value="$!{adminInfo.address}"/>
+					</td>   
+				</tr>
+				<tr>	
+					<td class="td_bg" align="right">
+						CP：
+					</td>
+					<td class="td_bg">
+						<select name="cpId" style="width:154px">
+								#foreach($cpInfo in $!cpInfoList)
+									<option value="$!{cpInfo.id}" #if($!{adminInfo.cpInfo.id}==$!{cpInfo.id}) selected="selected" #end>$!{cpInfo.name}</option>
+								#end
+						</select>
+					</td>   
+				</tr>
+			</table>
+		</form>	
+		<p style="text-align:center;">
+			<input type="button" id="subbutton" name="subbutton" value="提交" onclick="javascript:update();"/>
+			<input type="button" name="back" value="返回" onclick="history.go(-1);"/>
+		</p>
+	</body>	
+</html>

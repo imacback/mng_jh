@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>出错提示</title>
+<link href="#getCss()/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body leftMargin=0 topMargin=0 MARGINWIDTH="0" MARGINHEIGHT="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="5"></td>
+    <td>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+        <td height="5"></td>
+	  </tr>
+      <tr>
+        <td height="25" class="t1"><img src="#getPic()/small0.gif" width="16" height="16" align="absmiddle"> 您现在的位置&gt;&gt;错误提示页面</td>
+      </tr>
+    </table>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+        <td colspan="2" background="#getPic()/table_top_bg.jpg">
+		<table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="100%" height="35" background="#getPic()/table_top_bg3.jpg">　　<span class="style2"> &nbsp;</span></td>
+          </tr>
+        </table>
+		</td>
+	  </tr>
+	  <tr>
+	    <td align="center" height="70" valign="middle" class="table_w22"><font color="red">出错了！</font></td>
+	  </tr>
+    </table>
+	</td>
+	<td width="5"></td>
+  </tr>
+</table>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+      <td height="40" align="center">2015 北京艺动晴天网络有限公司</td>
+    </tr>
+</table>
+</form>
+</body>
+</html>

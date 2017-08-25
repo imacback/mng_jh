@@ -1,0 +1,14 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>汉娱世纪e主题渠道包</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head>
+<a href="$!{str1}" target="blank">e主题特价会员包（0.1元）</a>
+</br>
+<a href="$!{str2}" target="blank">e主题时尚会员包（10元）</a>
+</br>
+<a href="$!{str3}" target="blank">e主题豪华会员包（20元）</a>
+</br>
+<a href="$!{str4}" target="blank">e主题尊享会员包（30元）</a>
+</html>
